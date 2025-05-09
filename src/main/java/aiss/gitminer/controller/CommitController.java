@@ -24,7 +24,7 @@ public class CommitController {
     }
 
     @GetMapping("/{id}")
-    public Commit findOne(@PathVariable Long id) throws CommitNotFoundException {
+    public Commit findOne(@PathVariable String id) throws CommitNotFoundException {
         Optional<Commit> commit = commitRepository.findById(id);
 
         if (!commit.isPresent()) {
@@ -42,7 +42,7 @@ public class CommitController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateCommit(@RequestBody @Valid Commit updatedComm, @PathVariable long id)
+    public void updateCommit(@RequestBody @Valid Commit updatedComm, @PathVariable String id)
             throws CommitNotFoundException {
         Optional<Commit> commData = commitRepository.findById(id);
 
@@ -63,7 +63,7 @@ public class CommitController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCommit(@PathVariable long id) {
+    public void deleteCommit(@PathVariable String id) {
         if (commitRepository.existsById(id)) {
             commitRepository.deleteById(id);
         }

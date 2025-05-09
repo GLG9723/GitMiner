@@ -24,7 +24,7 @@ public class ProjectController {
     }
 
     @GetMapping("/{id}")
-    public Project findOne(@PathVariable long id) throws ProjectNotFoundException {
+    public Project findOne(@PathVariable String id) throws ProjectNotFoundException {
         Optional<Project> proj = projectRepository.findById(id);
 
         if (!proj.isPresent()) {
@@ -42,7 +42,7 @@ public class ProjectController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateProject(@RequestBody @Valid Project updatedProject, @PathVariable long id)
+    public void updateProject(@RequestBody @Valid Project updatedProject, @PathVariable String id)
             throws ProjectNotFoundException {
         Optional<Project> projData = projectRepository.findById(id);
 
@@ -58,7 +58,7 @@ public class ProjectController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteProject(@PathVariable long id) {
+    public void deleteProject(@PathVariable String id) {
         if (projectRepository.existsById(id)) {
             projectRepository.deleteById(id);
         }

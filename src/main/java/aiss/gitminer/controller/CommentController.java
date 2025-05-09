@@ -24,7 +24,7 @@ public class CommentController {
     }
 
     @GetMapping("/{id}")
-    public Comment findById(@PathVariable long id) throws CommentNotFoundException {
+    public Comment findById(@PathVariable String id) throws CommentNotFoundException {
         Optional<Comment> comment = commentRepository.findById(id);
 
         if (!comment.isPresent()) {
@@ -42,7 +42,7 @@ public class CommentController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateComment(@RequestBody @Valid Comment updatedComment, @PathVariable long id)
+    public void updateComment(@RequestBody @Valid Comment updatedComment, @PathVariable String id)
         throws CommentNotFoundException {
         Optional<Comment> commData = commentRepository.findById(id);
         if (!commData.isPresent()) {
@@ -58,7 +58,7 @@ public class CommentController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteComment(@PathVariable long id) {
+    public void deleteComment(@PathVariable String id) {
         if (commentRepository.existsById(id)) {
             commentRepository.deleteById(id);
         }

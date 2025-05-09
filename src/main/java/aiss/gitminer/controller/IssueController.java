@@ -24,7 +24,7 @@ public class IssueController {
     }
 
     @GetMapping("/{id}")
-    public Issue findOne(@PathVariable Long id) throws IssueNotFoundException {
+    public Issue findOne(@PathVariable String id) throws IssueNotFoundException {
         Optional<Issue> issue = issueRepository.findById(id);
 
         if (!issue.isPresent()) {
@@ -42,7 +42,7 @@ public class IssueController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateCommit(@RequestBody @Valid Issue updatedIss, @PathVariable long id)
+    public void updateCommit(@RequestBody @Valid Issue updatedIss, @PathVariable String id)
             throws IssueNotFoundException {
         Optional<Issue> issData = issueRepository.findById(id);
 
@@ -65,7 +65,7 @@ public class IssueController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCommit(@PathVariable long id) {
+    public void deleteCommit(@PathVariable String id) {
         if (issueRepository.existsById(id)) {
             issueRepository.deleteById(id);
         }
