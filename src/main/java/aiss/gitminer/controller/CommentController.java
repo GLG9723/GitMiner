@@ -56,5 +56,13 @@ public class CommentController {
         }
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteComment(@PathVariable long id) {
+        if (commentRepository.existsById(id)) {
+            commentRepository.deleteById(id);
+        }
+    }
+
 
 }

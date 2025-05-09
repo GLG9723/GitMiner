@@ -23,7 +23,7 @@ public class IssueController {
         return issueRepository.findAll();
     }
 
-    @GetMapping("/{id]")
+    @GetMapping("/{id}")
     public Issue findOne(@PathVariable Long id) throws IssueNotFoundException {
         Optional<Issue> issue = issueRepository.findById(id);
 

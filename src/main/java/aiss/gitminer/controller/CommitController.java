@@ -23,7 +23,7 @@ public class CommitController {
         return commitRepository.findAll();
     }
 
-    @GetMapping("/{id]")
+    @GetMapping("/{id}")
     public Commit findOne(@PathVariable Long id) throws CommitNotFoundException {
         Optional<Commit> commit = commitRepository.findById(id);
 
