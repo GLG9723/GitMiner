@@ -1,6 +1,7 @@
 package aiss.gitminer.controller;
 
 import aiss.gitminer.exception.IssueNotFoundException;
+import aiss.gitminer.model.Comment;
 import aiss.gitminer.model.Issue;
 import aiss.gitminer.repository.IssueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,16 @@ public class IssueController {
             throw new IssueNotFoundException();
         }
         return issue.get();
+    }
+
+    @GetMapping("/{id}/comments")
+    public List<Comment> findOneComments(@PathVariable String id) throws IssueNotFoundException {
+        Optional<Issue> issue = issueRepository.findById(id);
+
+        if (!issue.isPresent()) {
+            throw new IssueNotFoundException();
+        }
+        return issue.get().getComments();
     }
 
     @PostMapping
