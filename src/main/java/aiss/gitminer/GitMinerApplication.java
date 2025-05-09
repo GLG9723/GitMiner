@@ -9,5 +9,4 @@ public class GitMinerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(GitMinerApplication.class, args);
 	}
-// hola df
 }
