@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,8 +21,21 @@ public class IssueController {
     IssueRepository issueRepository;
 
     @GetMapping
-    public List<Issue> findAll() {
-        return issueRepository.findAll();
+    public List<Issue> findAll(@RequestParam(required = false) String authorId,
+                               @RequestParam(required = false) String state) {
+
+        List<Issue> issues;
+
+        if (state != null) {
+            issues = issueRepository.findByState(state);
+        } else {
+            issues = issueRepository.findAll();
+        }
+
+        if (authorId != null) {
+            issues = issues.stream().filter(x -> authorId.equals(x.getAuthor().getId())).toList();
+        }
+        return issues;
     }
 
     @GetMapping("/{id}")
