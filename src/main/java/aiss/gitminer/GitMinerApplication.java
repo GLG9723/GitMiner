@@ -6,10 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class GitMinerApplication {
 
-	// prueba
-
 	public static void main(String[] args) {
 		SpringApplication.run(GitMinerApplication.class, args);
 	}
-
+// hola df
 }
