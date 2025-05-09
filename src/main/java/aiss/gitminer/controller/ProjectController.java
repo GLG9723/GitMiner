@@ -1,5 +1,6 @@
 package aiss.gitminer.controller;
 
+import aiss.gitminer.exception.ProjectNotFoundException;
 import aiss.gitminer.model.Project;
 import aiss.gitminer.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/projects")
+@RequestMapping("/gitminer/projects")
 public class ProjectController {
 
     @Autowired
@@ -23,30 +24,35 @@ public class ProjectController {
     }
 
     @GetMapping("/{id}")
-    public Project findOne(@PathVariable long id) {
+    public Project findOne(@PathVariable long id) throws ProjectNotFoundException {
         Optional<Project> proj = projectRepository.findById(id);
+
+        if (!proj.isPresent()) {
+            throw new ProjectNotFoundException();
+        }
         return proj.get();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Project createProject(@RequestBody @Valid Project project) {
-        Project proj = projectRepository.save(new Project(project.getName(), project.getWebUrl()));
+        Project proj = projectRepository.save(project);
         return proj;
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateProject(@RequestBody @Valid Project updatedProject, @PathVariable long id) {
+    public void updateProject(@RequestBody @Valid Project updatedProject, @PathVariable long id)
+            throws ProjectNotFoundException {
         Optional<Project> projData = projectRepository.findById(id);
 
-        if (projData.isPresent()) {
+        if (projData.isPresent()) { // aqui hay que cambiar lo que modifica
             Project proj = projData.get();
             proj.setName(updatedProject.getName());
             proj.setWebUrl(updatedProject.getWebUrl());
             projectRepository.save(proj);
         } else {
-            // crear el projectNotFound
+            throw new ProjectNotFoundException();
         }
     }
 
