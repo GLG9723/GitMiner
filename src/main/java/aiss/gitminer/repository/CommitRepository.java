@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Optional;
 
 @Repository
@@ -16,5 +17,5 @@ public interface CommitRepository extends JpaRepository<Commit, Long> {
 
     void deleteById(String id);
 
-    Page<Commit> findByName(String name, Pageable pageable);
+    Page<Commit> findCommitByAuthorName(@NotEmpty(message = "Author name cannot be empty.") String authorName, Pageable pageable);
 }

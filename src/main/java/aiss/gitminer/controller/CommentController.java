@@ -40,7 +40,7 @@ public class CommentController {
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Project.class), mediaType = "application/json")})
     })
     @GetMapping
-    public List<Comment> findAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(required = false) String name, @RequestParam(required = false) String order) {
+    public List<Comment> findAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(required = false) String authorId, @RequestParam(required = false) String order) {
 
         Pageable paging;
 
@@ -56,8 +56,8 @@ public class CommentController {
 
         Page<Comment> pageComments;
 
-        if (name != null) {
-            pageComments = commentRepository.findByName(name,paging);
+        if (authorId != null) {
+            pageComments = commentRepository.findCommentByAuthor_Id(authorId, paging);
         }else {
             pageComments = commentRepository.findAll(paging);
         }

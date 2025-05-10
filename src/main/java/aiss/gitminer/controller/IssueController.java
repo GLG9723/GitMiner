@@ -42,7 +42,7 @@ public class IssueController {
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Project.class), mediaType = "application/json")})
     })
     @GetMapping
-    public List<Issue> findAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(required = false) String name, @RequestParam(required = false) String order) {
+    public List<Issue> findAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(required = false) String authorId, @RequestParam(required = false) String order) {
 
         Pageable paging;
 
@@ -58,8 +58,8 @@ public class IssueController {
 
         Page<Issue> pageIssues;
 
-        if (name != null) {
-            pageIssues = issueRepository.findByName(name,paging);
+        if (authorId != null) {
+            pageIssues = issueRepository.findIssueByAuthor_Id(authorId, paging);
         }else {
             pageIssues = issueRepository.findAll(paging);
         }

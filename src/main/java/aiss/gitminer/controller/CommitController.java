@@ -40,7 +40,7 @@ public class CommitController {
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Project.class), mediaType = "application/json")})
     })
     @GetMapping
-    public List<Commit> findAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(required = false) String name, @RequestParam(required = false) String order) {
+    public List<Commit> findAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(required = false) String authorName, @RequestParam(required = false) String order) {
 
         Pageable paging;
 
@@ -56,8 +56,8 @@ public class CommitController {
 
         Page<Commit> pageCommits;
 
-        if (name != null) {
-            pageCommits = commitRepository.findByName(name,paging);
+        if (authorName != null) {
+            pageCommits = commitRepository.findCommitByAuthorName(authorName,paging);
         }else {
             pageCommits = commitRepository.findAll(paging);
         }
