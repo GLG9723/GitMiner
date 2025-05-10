@@ -17,5 +17,9 @@ public interface IssueRepository extends JpaRepository<Issue, Long> {
 
     void deleteById(String id);
 
+    Page<Issue> findIssueByStateAndAuthor_Id(String state, String authorId, Pageable pageable);
+
     Page<Issue> findIssueByAuthor_Id(String authorId, Pageable pageable);
+
+    Page<Issue> findIssueByState(String state, Pageable pageable);
 }
