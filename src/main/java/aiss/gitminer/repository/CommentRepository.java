@@ -13,4 +13,6 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     boolean existsById(String id);
 
     void deleteById(String id);
+
+    Page<Comment> findByName(String name, Pageable pageable);
 }

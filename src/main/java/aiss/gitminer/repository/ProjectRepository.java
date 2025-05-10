@@ -13,4 +13,6 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     boolean existsById(String id);
 
     void deleteById(String id);
+
+    Page<Project> findByName(String name, Pageable pageable);
 }

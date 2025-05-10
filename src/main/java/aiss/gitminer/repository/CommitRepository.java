@@ -13,4 +13,6 @@ public interface CommitRepository extends JpaRepository<Commit, Long> {
     boolean existsById(String id);
 
     void deleteById(String id);
+
+    Page<Commit> findByName(String name, Pageable pageable);
 }
