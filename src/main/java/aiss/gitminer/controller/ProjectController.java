@@ -34,8 +34,28 @@ public class ProjectController {
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Project.class), mediaType = "application/json")})
     })
     @GetMapping
-    public List<Project> findAll() {
-        return projectRepository.findAll();
+    public List<Project> findAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(required = false) String name, @RequestParam(required = false) String order) {
+
+        Pageable paging;
+
+        if(order != null) {
+            if(order.startsWith("-")) {
+                paging = PageRequest.of(page, size, Sort.by(order.substring(1)).descending());
+            }else {
+                paging = PageRequest.of(page, size, Sort.by(order).ascending());
+            }
+        }else {
+            paging = PageRequest.of(page, size);
+        }
+
+        Page<Project> pageProjects;
+
+        if (name != null) {
+            pageProjects = projectRepository.findByName(name,paging);
+        }else {
+            pageProjects = projectRepository.findAll(paging);
+        }
+        return pageProjects.getContent();
     }
 
     @Operation(

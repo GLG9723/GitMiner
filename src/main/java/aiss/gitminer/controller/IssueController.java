@@ -38,21 +38,28 @@ public class IssueController {
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Project.class), mediaType = "application/json")})
     })
     @GetMapping
-    public List<Issue> findAll(@RequestParam(required = false) String authorId,
-                               @RequestParam(required = false) String state) {
+    public List<Issue> findAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(required = false) String name, @RequestParam(required = false) String order) {
 
-        List<Issue> issues;
+        Pageable paging;
 
-        if (state != null) {
-            issues = issueRepository.findByState(state);
-        } else {
-            issues = issueRepository.findAll();
+        if(order != null) {
+            if(order.startsWith("-")) {
+                paging = PageRequest.of(page, size, Sort.by(order.substring(1)).descending());
+            }else {
+                paging = PageRequest.of(page, size, Sort.by(order).ascending());
+            }
+        }else {
+            paging = PageRequest.of(page, size);
         }
 
-        if (authorId != null) {
-            issues = issues.stream().filter(x -> authorId.equals(x.getAuthor().getId())).toList();
+        Page<Issue> pageIssues;
+
+        if (name != null) {
+            pageIssues = issueRepository.findByName(name,paging);
+        }else {
+            pageIssues = issueRepository.findAll(paging);
         }
-        return issues;
+        return pageIssues.getContent();
     }
 
     @Operation(
