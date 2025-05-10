@@ -3,7 +3,15 @@ package aiss.gitminer.controller;
 import aiss.gitminer.exception.IssueNotFoundException;
 import aiss.gitminer.model.Comment;
 import aiss.gitminer.model.Issue;
+import aiss.gitminer.model.Project;
 import aiss.gitminer.repository.IssueRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Tag(name="Issue", description= "Issue management API")
 @RestController
 @RequestMapping("/gitminer/issues")
 public class IssueController {
@@ -20,6 +29,14 @@ public class IssueController {
     @Autowired
     IssueRepository issueRepository;
 
+    @Operation(
+            summary = "Retrieve all issues",
+            description = "Get all Issue objects",
+            tags = {"issue", "get"}
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Project.class), mediaType = "application/json")})
+    })
     @GetMapping
     public List<Issue> findAll(@RequestParam(required = false) String authorId,
                                @RequestParam(required = false) String state) {
@@ -38,8 +55,17 @@ public class IssueController {
         return issues;
     }
 
+    @Operation(
+            summary = "Retrieve an issue by id",
+            description = "Get an Issue object specifying its id",
+            tags = {"issue", "get"}
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Project.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())})
+    })
     @GetMapping("/{id}")
-    public Issue findOne(@PathVariable String id) throws IssueNotFoundException {
+    public Issue findOne(@Parameter(description= "id of an issue to be searched")@PathVariable String id) throws IssueNotFoundException {
         Optional<Issue> issue = issueRepository.findById(id);
 
         if (!issue.isPresent()) {
@@ -48,8 +74,17 @@ public class IssueController {
         return issue.get();
     }
 
+    @Operation(
+            summary = "Retrieve all comments of an issue by id",
+            description = "Get all Comment objects of an Issue object specifying its id, if not found throws an Exception",
+            tags = {"issue", "get"}
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Project.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())})
+    })
     @GetMapping("/{id}/comments")
-    public List<Comment> findOneComments(@PathVariable String id) throws IssueNotFoundException {
+    public List<Comment> findOneComments(@Parameter(description = "id of an issue to be searched") @PathVariable String id) throws IssueNotFoundException {
         Optional<Issue> issue = issueRepository.findById(id);
 
         if (!issue.isPresent()) {
@@ -58,6 +93,15 @@ public class IssueController {
         return issue.get().getComments();
     }
 
+    @Operation(
+            summary = "Insert an issue",
+            description = "Create a new Issue object",
+            tags = {"issue", "post", "create"}
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", content = {@Content(schema = @Schema(implementation = Project.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())})
+    })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Issue createCommit(@RequestBody @Valid Issue iss) {
@@ -65,9 +109,19 @@ public class IssueController {
         return issue;
     }
 
+    @Operation(
+            summary = "Update an issue by id",
+            description = "Update an Issue object specifying its id or throws an Exception if not exist",
+            tags = {"issue", "put", "update"}
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "400", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())})
+    })
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateCommit(@RequestBody @Valid Issue updatedIss, @PathVariable String id)
+    public void updateCommit(@RequestBody @Valid Issue updatedIss,@Parameter(description= "id of an issue to be updated") @PathVariable String id)
             throws IssueNotFoundException {
         Optional<Issue> issData = issueRepository.findById(id);
 
@@ -88,9 +142,19 @@ public class IssueController {
 
     }
 
+    @Operation(
+            summary = "Delete an issue by id",
+            description = "Delete an Issue object specifying its id",
+            tags = {"issue", "delete"}
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "400", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())})
+    })
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCommit(@PathVariable String id) {
+    public void deleteCommit(@Parameter(description= "id of an issue to be deleted")@PathVariable String id) {
         if (issueRepository.existsById(id)) {
             issueRepository.deleteById(id);
         }
