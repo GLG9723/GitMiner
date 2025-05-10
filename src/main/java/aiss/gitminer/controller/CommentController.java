@@ -2,8 +2,19 @@ package aiss.gitminer.controller;
 
 import aiss.gitminer.exception.CommentNotFoundException;
 import aiss.gitminer.model.Comment;
+import aiss.gitminer.model.Project;
 import aiss.gitminer.repository.CommentRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +22,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
+@Tag(name="Comment", description= "Comment management API")
 @RestController
 @RequestMapping("/gitminer/comments")
 public class CommentController {
@@ -18,13 +30,37 @@ public class CommentController {
     @Autowired
     CommentRepository commentRepository;
 
+    @Operation(
+            summary = "Retrieve all comments",
+            description = "Get all Comment objects",
+            tags = {"repository", "get"}
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Project.class), mediaType = "application/json")})
+    })
     @GetMapping
-    public List<Comment> findAll() {
-        return commentRepository.findAll();
+    public List<Comment> findAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(required = false) String name) {
+        Page<Comment> pageComments;
+        Pageable paging = PageRequest.of(page, size);
+        if (name != null) {
+            pageComments = commentRepository.(name,paging);
+        }else {
+            pageComments = commentRepository.findAll(paging);
+        }
+        return pageComments.getContent();
     }
 
+    @Operation(
+            summary = "Retrieve a comment by id",
+            description = "Get a Comment object specifying its id",
+            tags = {"repository", "get"}
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Project.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())})
+    })
     @GetMapping("/{id}")
-    public Comment findById(@PathVariable String id) throws CommentNotFoundException {
+    public Comment findById(@Parameter(description= "id of a comment to be searched") @PathVariable String id) throws CommentNotFoundException {
         Optional<Comment> comment = commentRepository.findById(id);
 
         if (!comment.isPresent()) {
@@ -33,6 +69,15 @@ public class CommentController {
         return comment.get();
     }
 
+    @Operation(
+            summary = "Insert a comment",
+            description = "Create a new Comment object",
+            tags = {"repository", "post", "create"}
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", content = {@Content(schema = @Schema(implementation = Project.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())})
+    })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Comment createComment(@RequestBody @Valid Comment comm) {
@@ -40,10 +85,20 @@ public class CommentController {
         return comment;
     }
 
+    @Operation(
+            summary = "Update a comment by id",
+            description = "Update a Comment object specifying its id or throws an Exception if not exist",
+            tags = {"repository", "put", "update"}
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "400", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())})
+    })
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateComment(@RequestBody @Valid Comment updatedComment, @PathVariable String id)
-        throws CommentNotFoundException {
+    public void updateComment(@RequestBody @Valid Comment updatedComment, @Parameter(description="id of a comment to be updated")@PathVariable String id)
+            throws CommentNotFoundException {
         Optional<Comment> commData = commentRepository.findById(id);
         if (!commData.isPresent()) {
             throw new CommentNotFoundException();
@@ -56,9 +111,19 @@ public class CommentController {
         }
     }
 
+    @Operation(
+            summary = "Delete a comment by id",
+            description = "Delete a Comment object specifying its id",
+            tags = {"repository", "delete"}
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "400", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())})
+    })
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteComment(@PathVariable String id) {
+    public void deleteComment(@Parameter(description = "id of a comment to be deleted")@PathVariable String id) {
         if (commentRepository.existsById(id)) {
             commentRepository.deleteById(id);
         }
