@@ -2,7 +2,6 @@ package aiss.gitminer.controller;
 
 import aiss.gitminer.exception.CommentNotFoundException;
 import aiss.gitminer.model.Comment;
-import aiss.gitminer.model.Project;
 import aiss.gitminer.repository.CommentRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

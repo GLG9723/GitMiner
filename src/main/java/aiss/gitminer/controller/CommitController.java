@@ -1,9 +1,7 @@
 package aiss.gitminer.controller;
 
 import aiss.gitminer.exception.CommitNotFoundException;
-import aiss.gitminer.model.Comment;
 import aiss.gitminer.model.Commit;
-import aiss.gitminer.model.Project;
 import aiss.gitminer.repository.CommitRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
