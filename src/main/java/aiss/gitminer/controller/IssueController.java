@@ -21,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -143,12 +144,15 @@ public class IssueController {
 
         if (issData.isPresent()) {
             Issue issue = issData.get();
-            issue.setTitle(updatedIss.getTitle());
-            issue.setDescription(updatedIss.getDescription());
+
             issue.setState(updatedIss.getState());
-            issue.setCreatedAt(updatedIss.getCreatedAt());
-            issue.setUpdatedAt(updatedIss.getUpdatedAt());
-            issue.setClosedAt(updatedIss.getClosedAt());
+
+            issue.setUpdatedAt(LocalDateTime.now().toString());
+
+            if (updatedIss.getState().equals("closed")) {
+                issue.setClosedAt(LocalDateTime.now().toString());
+            }
+
             issue.setLabels(updatedIss.getLabels());
             issue.setVotes(updatedIss.getVotes());
             issueRepository.save(issue);

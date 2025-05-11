@@ -120,10 +120,6 @@ public class CommitController {
             Commit commit = commData.get();
             commit.setTitle(updatedComm.getTitle());
             commit.setMessage(updatedComm.getMessage());
-            commit.setWebUrl(updatedComm.getWebUrl());
-            commit.setAuthorName(updatedComm.getAuthorName());
-            commit.setAuthorEmail(updatedComm.getAuthorEmail());
-            commit.setAuthoredDate(updatedComm.getAuthoredDate());
             commitRepository.save(commit);
         } else {
             throw new CommitNotFoundException();

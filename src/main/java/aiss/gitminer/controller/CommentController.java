@@ -20,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -119,8 +120,7 @@ public class CommentController {
         } else {
             Comment comment = commData.get();
             comment.setBody(updatedComment.getBody());
-            comment.setCreatedAt(updatedComment.getCreatedAt());
-            comment.setUpdatedAt(updatedComment.getUpdatedAt());
+            comment.setUpdatedAt(LocalDateTime.now().toString());
             commentRepository.save(comment);
         }
     }
