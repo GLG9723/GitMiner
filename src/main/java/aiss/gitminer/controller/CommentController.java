@@ -34,13 +34,13 @@ public class CommentController {
     @Operation(
             summary = "Retrieve all comments",
             description = "Get all Comment objects",
-            tags = {"repository", "get"}
+            tags = {"Comment", "Get"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Comment.class), mediaType = "application/json")})
     })
     @GetMapping
-    public List<Comment> findAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(required = false) String authorId, @RequestParam(required = false) String order) {
+    public List<Comment> findAll(@Parameter(description = "Page number to be retrieved")@RequestParam(defaultValue = "0") int page,@Parameter(description = "Page size to be retrieved") @RequestParam(defaultValue = "10") int size,@Parameter(description = "id of the author to be filtered") @RequestParam(required = false) String authorId,@Parameter(description = "order of the request retrieved") @RequestParam(required = false) String order) {
 
         Pageable paging;
 
@@ -67,7 +67,7 @@ public class CommentController {
     @Operation(
             summary = "Retrieve a comment by id",
             description = "Get a Comment object specifying its id",
-            tags = {"Comment", "get"}
+            tags = {"Comment", "Get"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Comment.class), mediaType = "application/json")}),
@@ -86,7 +86,7 @@ public class CommentController {
     @Operation(
             summary = "Insert a comment",
             description = "Create a new Comment object",
-            tags = {"Comment", "post", "create"}
+            tags = {"Comment", "Post"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "201", content = {@Content(schema = @Schema(implementation = Comment.class), mediaType = "application/json")}),
@@ -102,7 +102,7 @@ public class CommentController {
     @Operation(
             summary = "Update a comment by id",
             description = "Update a Comment object specifying its id or throws an Exception if not exist",
-            tags = {"Comment", "put", "update"}
+            tags = {"Comment", "Put"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "204", content = {@Content(schema = @Schema())}),
@@ -128,7 +128,7 @@ public class CommentController {
     @Operation(
             summary = "Delete a comment by id",
             description = "Delete a Comment object specifying its id",
-            tags = {"Comment", "delete"}
+            tags = {"Comment", "Delete"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "204", content = {@Content(schema = @Schema())}),

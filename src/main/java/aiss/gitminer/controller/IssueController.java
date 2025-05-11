@@ -36,13 +36,13 @@ public class IssueController {
     @Operation(
             summary = "Retrieve all issues",
             description = "Get all Issue objects",
-            tags = {"Issue", "get"}
+            tags = {"Issue", "Get"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Issue.class), mediaType = "application/json")})
     })
     @GetMapping
-    public List<Issue> findAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(required = false) String authorId, @RequestParam(required = false) String state, @RequestParam(required = false) String order) {
+    public List<Issue> findAll(@Parameter(description = "page number to be retrieved")@RequestParam(defaultValue = "0") int page,@Parameter(description = "page size to be retrieved") @RequestParam(defaultValue = "10") int size,@Parameter(description = "id of the author to be filtered") @RequestParam(required = false) String authorId,@Parameter(description = "state of the issue to be filtered") @RequestParam(required = false) String state,@Parameter(description = "order of the request to be retrieved") @RequestParam(required = false) String order) {
 
         Pageable paging;
 
@@ -74,7 +74,7 @@ public class IssueController {
     @Operation(
             summary = "Retrieve an issue by id",
             description = "Get an Issue object specifying its id",
-            tags = {"Issue", "get"}
+            tags = {"Issue", "Get"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Issue.class), mediaType = "application/json")}),
@@ -93,7 +93,7 @@ public class IssueController {
     @Operation(
             summary = "Retrieve all comments of an issue by id",
             description = "Get all Comment objects of an Issue object specifying its id, if not found throws an Exception",
-            tags = {"Issue", "get"}
+            tags = {"Issue", "Get"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Comment.class), mediaType = "application/json")}),
@@ -112,7 +112,7 @@ public class IssueController {
     @Operation(
             summary = "Insert an issue",
             description = "Create a new Issue object",
-            tags = {"Issue", "post", "create"}
+            tags = {"Issue", "Post"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "201", content = {@Content(schema = @Schema(implementation = Issue.class), mediaType = "application/json")}),
@@ -128,7 +128,7 @@ public class IssueController {
     @Operation(
             summary = "Update an issue by id",
             description = "Update an Issue object specifying its id or throws an Exception if not exist",
-            tags = {"Issue", "put", "update"}
+            tags = {"Issue", "Put"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "204", content = {@Content(schema = @Schema())}),
@@ -161,7 +161,7 @@ public class IssueController {
     @Operation(
             summary = "Delete an issue by id",
             description = "Delete an Issue object specifying its id",
-            tags = {"Issue", "delete"}
+            tags = {"Issue", "Delete"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "204", content = {@Content(schema = @Schema())}),

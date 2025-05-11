@@ -32,13 +32,13 @@ public class ProjectController {
     @Operation(
             summary = "Retrieve all projects",
             description = "Get all Project objects",
-            tags = {"Project", "get"}
+            tags = {"Project", "Get"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Project.class), mediaType = "application/json")})
     })
     @GetMapping
-    public List<Project> findAll(@Parameter(description = "Page number to be retrieved") @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(required = false) String name, @RequestParam(required = false) String order) {
+    public List<Project> findAll(@Parameter(description = "Page number to be retrieved") @RequestParam(defaultValue = "0") int page,@Parameter(description = "Page size to be retrieved") @RequestParam(defaultValue = "10") int size,@Parameter(description = "atribute to be filtered") @RequestParam(required = false) String name,@Parameter(description = "order of the request retrieved") @RequestParam(required = false) String order) {
 
         Pageable paging;
 
@@ -65,7 +65,7 @@ public class ProjectController {
     @Operation(
             summary = "Retrieve a project by id",
             description = "Get a Project object specifying its id",
-            tags = {"Project", "get"}
+            tags = {"Project", "Get"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Project.class), mediaType = "application/json")}),
@@ -84,7 +84,7 @@ public class ProjectController {
     @Operation(
             summary = "Insert a project",
             description = "Create a new Project object",
-            tags = {"Project", "post", "create"}
+            tags = {"Project", "Post"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "201", content = {@Content(schema = @Schema(implementation = Project.class), mediaType = "application/json")}),
@@ -100,7 +100,7 @@ public class ProjectController {
     @Operation(
             summary = "Update a project by id",
             description = "Update a project object specifying its id or throws an Exception if not exist",
-            tags = {"Project", "put", "update"}
+            tags = {"Project", "Put"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "204", content = {@Content(schema = @Schema())}),
@@ -126,7 +126,7 @@ public class ProjectController {
     @Operation(
             summary = "Delete a project by id",
             description = "Delete a Project object specifying its id",
-            tags = {"Project", "delete"}
+            tags = {"Project", "Delete"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "204", content = {@Content(schema = @Schema())}),

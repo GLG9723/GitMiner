@@ -35,13 +35,13 @@ public class CommitController {
     @Operation(
             summary = "Retrieve all commits",
             description = "Get all Commit objects",
-            tags = {"Commit", "get"}
+            tags = {"Commit", "Get"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Commit.class), mediaType = "application/json")})
     })
     @GetMapping
-    public List<Commit> findAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(required = false) String authorName, @RequestParam(required = false) String order) {
+    public List<Commit> findAll(@Parameter(description = "Page number to be retrieved") @RequestParam(defaultValue = "0") int page,@Parameter(description = "Page size to be retrieved") @RequestParam(defaultValue = "10") int size,@Parameter(description = "name of the author to be filtered") @RequestParam(required = false) String authorName,@Parameter(description = "order of the request retrieved") @RequestParam(required = false) String order) {
 
         Pageable paging;
 
@@ -68,7 +68,7 @@ public class CommitController {
     @Operation(
             summary = "Retrieve a commit by id",
             description = "Get a Commit object specifying its id",
-            tags = {"Commit", "get"}
+            tags = {"Commit", "Get"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Commit.class), mediaType = "application/json")}),
@@ -87,7 +87,7 @@ public class CommitController {
     @Operation(
             summary = "Insert a commit",
             description = "Create a new Commit object",
-            tags = {"Commit", "post", "create"}
+            tags = {"Commit", "Post"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "201", content = {@Content(schema = @Schema(implementation = Commit.class), mediaType = "application/json")}),
@@ -103,7 +103,7 @@ public class CommitController {
     @Operation(
             summary = "Update a commit by id",
             description = "Update a Commit object specifying its id or throws an Exception if not exist",
-            tags = {"Commit", "put", "update"}
+            tags = {"Commit", "Put"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "204", content = {@Content(schema = @Schema())}),
@@ -134,7 +134,7 @@ public class CommitController {
     @Operation(
             summary = "Delete a commit by id",
             description = "Delete a Commit object specifying its id",
-            tags = {"Commit", "delete"}
+            tags = {"Commit", "Delete"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "204", content = {@Content(schema = @Schema())}),
