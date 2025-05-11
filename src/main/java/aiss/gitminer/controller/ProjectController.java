@@ -113,7 +113,7 @@ public class ProjectController {
             throws ProjectNotFoundException {
         Optional<Project> projData = projectRepository.findById(id);
 
-        if (projData.isPresent()) { // aqui hay que cambiar lo que modifica
+        if (projData.isPresent()) {
             Project proj = projData.get();
             proj.setName(updatedProject.getName());
             proj.setWebUrl(updatedProject.getWebUrl());
