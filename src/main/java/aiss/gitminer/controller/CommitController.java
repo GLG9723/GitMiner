@@ -36,10 +36,14 @@ public class CommitController {
             tags = {"Commit", "Get"}
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Commit.class), mediaType = "application/json")})
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Commit.class),
+                    mediaType = "application/json")})
     })
     @GetMapping
-    public List<Commit> findAll(@Parameter(description = "Page number to be retrieved") @RequestParam(defaultValue = "0") int page,@Parameter(description = "Page size to be retrieved") @RequestParam(defaultValue = "10") int size,@Parameter(description = "name of the author to be filtered") @RequestParam(required = false) String authorName,@Parameter(description = "order of the request retrieved") @RequestParam(required = false) String order) {
+    public List<Commit> findAll(@Parameter(description = "Page number to be retrieved") @RequestParam(defaultValue = "0") int page,
+                                @Parameter(description = "Page size to be retrieved") @RequestParam(defaultValue = "10") int size,
+                                @Parameter(description = "name of the author to be filtered") @RequestParam(required = false) String authorName,
+                                @Parameter(description = "order of the request retrieved") @RequestParam(required = false) String order) {
 
         Pageable paging;
 
@@ -69,7 +73,8 @@ public class CommitController {
             tags = {"Commit", "Get"}
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Commit.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Commit.class),
+                    mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())})
     })
     @GetMapping("/{id}")
@@ -88,7 +93,8 @@ public class CommitController {
             tags = {"Commit", "Post"}
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "201", content = {@Content(schema = @Schema(implementation = Commit.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "201", content = {@Content(schema = @Schema(implementation = Commit.class),
+                    mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())})
     })
     @PostMapping
@@ -110,7 +116,8 @@ public class CommitController {
     })
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateCommit(@RequestBody @Valid Commit updatedComm,@Parameter(description="id of a commit to be updated") @PathVariable String id)
+    public void updateCommit(@RequestBody @Valid Commit updatedComm,
+                             @Parameter(description="id of a commit to be updated") @PathVariable String id)
             throws CommitNotFoundException {
         Optional<Commit> commData = commitRepository.findById(id);
 

@@ -35,10 +35,14 @@ public class ProjectController {
             tags = {"Project", "Get"}
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Project.class), mediaType = "application/json")})
+            @ApiResponse(responseCode = "200", content = {@Content(schema =
+            @Schema(implementation = Project.class), mediaType = "application/json")})
     })
     @GetMapping
-    public List<Project> findAll(@Parameter(description = "Page number to be retrieved") @RequestParam(defaultValue = "0") int page,@Parameter(description = "Page size to be retrieved") @RequestParam(defaultValue = "10") int size,@Parameter(description = "atribute to be filtered") @RequestParam(required = false) String name,@Parameter(description = "order of the request retrieved") @RequestParam(required = false) String order) {
+    public List<Project> findAll(@Parameter(description = "Page number to be retrieved") @RequestParam(defaultValue = "0") int page,
+                                 @Parameter(description = "Page size to be retrieved") @RequestParam(defaultValue = "10") int size,
+                                 @Parameter(description = "atribute to be filtered") @RequestParam(required = false) String name,
+                                 @Parameter(description = "order of the request retrieved") @RequestParam(required = false) String order) {
 
         Pageable paging;
 
@@ -68,11 +72,13 @@ public class ProjectController {
             tags = {"Project", "Get"}
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Project.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Project.class),
+                    mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())})
     })
     @GetMapping("/{id}")
-    public Project findOne(@Parameter(description= "id of a project to be searched")@PathVariable String id) throws ProjectNotFoundException {
+    public Project findOne(@Parameter(description= "id of a project to be searched")@PathVariable String id)
+            throws ProjectNotFoundException {
         Optional<Project> proj = projectRepository.findById(id);
 
         if (!proj.isPresent()) {
@@ -87,7 +93,8 @@ public class ProjectController {
             tags = {"Project", "Post"}
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "201", content = {@Content(schema = @Schema(implementation = Project.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "201", content = {@Content(schema =
+            @Schema(implementation = Project.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())})
     })
     @PostMapping
@@ -109,7 +116,8 @@ public class ProjectController {
     })
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateProject(@RequestBody @Valid Project updatedProject,@Parameter(description= "id of a project to be updated") @PathVariable String id)
+    public void updateProject(@RequestBody @Valid Project updatedProject,
+                              @Parameter(description= "id of a project to be updated") @PathVariable String id)
             throws ProjectNotFoundException {
         Optional<Project> projData = projectRepository.findById(id);
 

@@ -38,10 +38,15 @@ public class IssueController {
             tags = {"Issue", "Get"}
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Issue.class), mediaType = "application/json")})
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Issue.class),
+                    mediaType = "application/json")})
     })
     @GetMapping
-    public List<Issue> findAll(@Parameter(description = "page number to be retrieved")@RequestParam(defaultValue = "0") int page,@Parameter(description = "page size to be retrieved") @RequestParam(defaultValue = "10") int size,@Parameter(description = "id of the author to be filtered") @RequestParam(required = false) String authorId,@Parameter(description = "state of the issue to be filtered") @RequestParam(required = false) String state,@Parameter(description = "order of the request to be retrieved") @RequestParam(required = false) String order) {
+    public List<Issue> findAll(@Parameter(description = "page number to be retrieved")@RequestParam(defaultValue = "0") int page,
+                               @Parameter(description = "page size to be retrieved") @RequestParam(defaultValue = "10") int size,
+                               @Parameter(description = "id of the author to be filtered") @RequestParam(required = false) String authorId,
+                               @Parameter(description = "state of the issue to be filtered") @RequestParam(required = false) String state,
+                               @Parameter(description = "order of the request to be retrieved") @RequestParam(required = false) String order) {
 
         Pageable paging;
 
@@ -76,7 +81,8 @@ public class IssueController {
             tags = {"Issue", "Get"}
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Issue.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Issue.class),
+                    mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())})
     })
     @GetMapping("/{id}")
@@ -95,11 +101,13 @@ public class IssueController {
             tags = {"Issue", "Get"}
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Comment.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Comment.class),
+                    mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())})
     })
     @GetMapping("/{id}/comments")
-    public List<Comment> findOneComments(@Parameter(description = "id of an issue to be searched") @PathVariable String id) throws IssueNotFoundException {
+    public List<Comment> findOneComments(@Parameter(description = "id of an issue to be searched") @PathVariable String id)
+            throws IssueNotFoundException {
         Optional<Issue> issue = issueRepository.findById(id);
 
         if (!issue.isPresent()) {
@@ -114,7 +122,8 @@ public class IssueController {
             tags = {"Issue", "Post"}
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "201", content = {@Content(schema = @Schema(implementation = Issue.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "201", content = {@Content(schema = @Schema(implementation = Issue.class),
+                    mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())})
     })
     @PostMapping
@@ -136,7 +145,8 @@ public class IssueController {
     })
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateCommit(@RequestBody @Valid Issue updatedIss,@Parameter(description= "id of an issue to be updated") @PathVariable String id)
+    public void updateCommit(@RequestBody @Valid Issue updatedIss,
+                             @Parameter(description= "id of an issue to be updated") @PathVariable String id)
             throws IssueNotFoundException {
         Optional<Issue> issData = issueRepository.findById(id);
 

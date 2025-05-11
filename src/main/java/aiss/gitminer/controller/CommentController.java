@@ -37,10 +37,14 @@ public class CommentController {
             tags = {"Comment", "Get"}
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Comment.class), mediaType = "application/json")})
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Comment.class),
+                    mediaType = "application/json")})
     })
     @GetMapping
-    public List<Comment> findAll(@Parameter(description = "Page number to be retrieved")@RequestParam(defaultValue = "0") int page,@Parameter(description = "Page size to be retrieved") @RequestParam(defaultValue = "10") int size,@Parameter(description = "id of the author to be filtered") @RequestParam(required = false) String authorId,@Parameter(description = "order of the request retrieved") @RequestParam(required = false) String order) {
+    public List<Comment> findAll(@Parameter(description = "Page number to be retrieved")@RequestParam(defaultValue = "0") int page,
+                                 @Parameter(description = "Page size to be retrieved") @RequestParam(defaultValue = "10") int size,
+                                 @Parameter(description = "id of the author to be filtered") @RequestParam(required = false) String authorId,
+                                 @Parameter(description = "order of the request retrieved") @RequestParam(required = false) String order) {
 
         Pageable paging;
 
@@ -70,11 +74,13 @@ public class CommentController {
             tags = {"Comment", "Get"}
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Comment.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Comment.class),
+                    mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())})
     })
     @GetMapping("/{id}")
-    public Comment findById(@Parameter(description= "id of a comment to be searched") @PathVariable String id) throws CommentNotFoundException {
+    public Comment findById(@Parameter(description= "id of a comment to be searched") @PathVariable String id)
+            throws CommentNotFoundException {
         Optional<Comment> comment = commentRepository.findById(id);
 
         if (!comment.isPresent()) {
@@ -89,7 +95,8 @@ public class CommentController {
             tags = {"Comment", "Post"}
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "201", content = {@Content(schema = @Schema(implementation = Comment.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "201", content = {@Content(schema = @Schema(implementation = Comment.class),
+                    mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())})
     })
     @PostMapping
@@ -111,7 +118,8 @@ public class CommentController {
     })
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateComment(@RequestBody @Valid Comment updatedComment, @Parameter(description="id of a comment to be updated")@PathVariable String id)
+    public void updateComment(@RequestBody @Valid Comment updatedComment,
+                              @Parameter(description="id of a comment to be updated")@PathVariable String id)
             throws CommentNotFoundException {
         Optional<Comment> commData = commentRepository.findById(id);
         if (!commData.isPresent()) {
