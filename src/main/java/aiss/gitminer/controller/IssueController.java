@@ -36,7 +36,7 @@ public class IssueController {
     @Operation(
             summary = "Retrieve all issues",
             description = "Get all Issue objects",
-            tags = {"issue", "get"}
+            tags = {"Issue", "get"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Issue.class), mediaType = "application/json")})
@@ -74,7 +74,7 @@ public class IssueController {
     @Operation(
             summary = "Retrieve an issue by id",
             description = "Get an Issue object specifying its id",
-            tags = {"issue", "get"}
+            tags = {"Issue", "get"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Issue.class), mediaType = "application/json")}),
@@ -93,7 +93,7 @@ public class IssueController {
     @Operation(
             summary = "Retrieve all comments of an issue by id",
             description = "Get all Comment objects of an Issue object specifying its id, if not found throws an Exception",
-            tags = {"issue", "get"}
+            tags = {"Issue", "get"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Comment.class), mediaType = "application/json")}),
@@ -112,7 +112,7 @@ public class IssueController {
     @Operation(
             summary = "Insert an issue",
             description = "Create a new Issue object",
-            tags = {"issue", "post", "create"}
+            tags = {"Issue", "post", "create"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "201", content = {@Content(schema = @Schema(implementation = Issue.class), mediaType = "application/json")}),
@@ -128,7 +128,7 @@ public class IssueController {
     @Operation(
             summary = "Update an issue by id",
             description = "Update an Issue object specifying its id or throws an Exception if not exist",
-            tags = {"issue", "put", "update"}
+            tags = {"Issue", "put", "update"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "204", content = {@Content(schema = @Schema())}),
@@ -161,7 +161,7 @@ public class IssueController {
     @Operation(
             summary = "Delete an issue by id",
             description = "Delete an Issue object specifying its id",
-            tags = {"issue", "delete"}
+            tags = {"Issue", "delete"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "204", content = {@Content(schema = @Schema())}),

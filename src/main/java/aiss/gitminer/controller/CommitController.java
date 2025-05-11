@@ -35,7 +35,7 @@ public class CommitController {
     @Operation(
             summary = "Retrieve all commits",
             description = "Get all Commit objects",
-            tags = {"repository", "get"}
+            tags = {"Commit", "get"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Commit.class), mediaType = "application/json")})
@@ -68,7 +68,7 @@ public class CommitController {
     @Operation(
             summary = "Retrieve a commit by id",
             description = "Get a Commit object specifying its id",
-            tags = {"repository", "get"}
+            tags = {"Commit", "get"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Commit.class), mediaType = "application/json")}),
@@ -87,7 +87,7 @@ public class CommitController {
     @Operation(
             summary = "Insert a commit",
             description = "Create a new Commit object",
-            tags = {"repository", "post", "create"}
+            tags = {"Commit", "post", "create"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "201", content = {@Content(schema = @Schema(implementation = Commit.class), mediaType = "application/json")}),
@@ -103,7 +103,7 @@ public class CommitController {
     @Operation(
             summary = "Update a commit by id",
             description = "Update a Commit object specifying its id or throws an Exception if not exist",
-            tags = {"repository", "put", "update"}
+            tags = {"Commit", "put", "update"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "204", content = {@Content(schema = @Schema())}),
@@ -134,7 +134,7 @@ public class CommitController {
     @Operation(
             summary = "Delete a commit by id",
             description = "Delete a Commit object specifying its id",
-            tags = {"repository", "delete"}
+            tags = {"Commit", "delete"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "204", content = {@Content(schema = @Schema())}),

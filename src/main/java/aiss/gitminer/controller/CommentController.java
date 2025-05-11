@@ -67,7 +67,7 @@ public class CommentController {
     @Operation(
             summary = "Retrieve a comment by id",
             description = "Get a Comment object specifying its id",
-            tags = {"repository", "get"}
+            tags = {"Comment", "get"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = Comment.class), mediaType = "application/json")}),
@@ -86,7 +86,7 @@ public class CommentController {
     @Operation(
             summary = "Insert a comment",
             description = "Create a new Comment object",
-            tags = {"repository", "post", "create"}
+            tags = {"Comment", "post", "create"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "201", content = {@Content(schema = @Schema(implementation = Comment.class), mediaType = "application/json")}),
@@ -102,7 +102,7 @@ public class CommentController {
     @Operation(
             summary = "Update a comment by id",
             description = "Update a Comment object specifying its id or throws an Exception if not exist",
-            tags = {"repository", "put", "update"}
+            tags = {"Comment", "put", "update"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "204", content = {@Content(schema = @Schema())}),
@@ -128,7 +128,7 @@ public class CommentController {
     @Operation(
             summary = "Delete a comment by id",
             description = "Delete a Comment object specifying its id",
-            tags = {"repository", "delete"}
+            tags = {"Comment", "delete"}
     )
     @ApiResponses({
             @ApiResponse(responseCode = "204", content = {@Content(schema = @Schema())}),
